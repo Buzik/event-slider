@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Первый канал</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='dist/fonts.css'>
+    <link rel='stylesheet' href='dist/style.css'>
+    <script type="text/javascript" src="dist/bundle.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-touch-event.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body class="bodyG">
+    <header>
+        <div class="header-top">
+            <a href="" class="header-top__logo">Первый канал</a>
+            <div class="header-top__item">
+                <div class="header-top__date">18:05 Воскресенье, 25 сентября 2015</div>
+                <a href="" class="header-top__geo">Республика Северная Осетия-Алания</a>
+                <div class="header-top__social">
+                    <a href="" class="header-top__social-icon _vk"></a>
+                    <a href="" class="header-top__social-icon _ok"></a>
+                    <a href="" class="header-top__social-icon _fb"></a>
+                    <a href="" class="header-top__social-icon _inst"></a>
+                    <a href="" class="header-top__social-icon _twit"></a>
+                </div>
+            </div>
+        </div>
+        <div class="header-menu">
+            <nav class="header-nav">
+                <ul class="header-nav__list">
+                    <li class="header-menu__item"><a href="" class="header-menu__link">Прямой эфир</a></li>
+                    <li class="header-menu__item"><a href="" class="header-menu__link">Новости</a></li>
+                    <li class="header-menu__item"><a href="" class="header-menu__link header-menu__more-button">Телепроекты</a></li>
+                    <li class="header-menu__item"><a href="" class="header-menu__link header-menu__more-button">Фильмы и сериалы</a></li>
+                    <li class="header-menu__item"><a href="" class="header-menu__link">доккино</a></li>
+                    <li class="header-menu__item"><a href="" class="header-menu__link header-menu__more-button _active">спорт</a></li>
+                    <li class="header-menu__item"><a href="" class="header-menu__link">телепрограмма</a></li>
+                </ul>
+            </nav>
+            <div class="header-menu__right">
+                <a href="" class="header-menu__promo-button"><img src="img/promobutton.png" alt=""></a>
+                <a href="" class="header-menu__search-button"></a>
+            </div>
+        </div>
+        <div class="header-submenu">
+            <ul class="header-submenu__list">
+                <li class="header-submenu__item"><a href="" class="header-submenu__link">⚽ Футбол</a></li>
+                <li class="header-submenu__item"><a href="" class="header-submenu__link">🏒 Хоккей</a></li>
+                <li class="header-submenu__item"><a href="" class="header-submenu__link">⛸ фигурное катание</a></li>
+                <li class="header-submenu__item"><a href="" class="header-submenu__link">🥊 Бокс/ММА</a></li>
+                <li class="header-submenu__item"><a href="" class="header-submenu__link">⛷ лыжи</a></li>
+                <li class="header-submenu__item"><a href="" class="header-submenu__link">🎾 теннис</a></li>
+                <li class="header-submenu__item"><a href="" class="header-submenu__link">🥇 олимпийские игры</a></li>
+            </ul>
+        </div>
+    </header>
+    <h1>Прямой эфир</h1>
+    <div class="page-content">
+        <div class="page-content__info">
+            <div class="page-content__name">Название трансляции</div>
+            <img src="img/image10.png" alt="">
+            <div id="app">
+                <div class="date-carousel">
+                    <!-- кнопки переключения дат -->
+                    <div class="card-img">
+                        <div class="actions">
+                            <span @click="prevImage" class="prev">
+                                <img src="img/arrow1.png" alt="">
+                            </span>
+                            <span @click="nextImage" class="next">
+                                <img src="img/arrow2.png" alt="">
+                            </span>
+                        </div>
+                    </div>
+                    <!-- предполагается, что даты будут сформированы на бекэнде , а подгрузка разписания будет по axios-->
+                    <div class="list-of-dates" id="list" count="7">
+                        <ul>
+                            <li @click="loadInfo(1)" v-bind:class="{ selected: activeDate === 1 }" class="list-of-dates__item _workday">
+                                <div class="list-of-dates__date"><p>25</p>сентября</div>
+                                <div class="list-of-dates__weekday">СР</div>
+                            </li>
+                            <li @click="loadInfo(2)" v-bind:class="{ selected: activeDate === 2 }" class="list-of-dates__item _workday">
+                                <div class="list-of-dates__date"><p>26</p>сентября</div>
+                                <div class="list-of-dates__weekday">ЧТ</div>
+                            </li>
+                            <li @click="loadInfo(3)" v-bind:class="{ selected: activeDate === 3 }" class="list-of-dates__item _workday">
+                                <div class="list-of-dates__date"><p>27</p>сентября</div>
+                                <div class="list-of-dates__weekday">ПТ</div>
+                            </li>
+                            <li @click="loadInfo(4)" v-bind:class="{ selected: activeDate === 4 }" class="list-of-dates__item _weekend _saturday">
+                                <div class="list-of-dates__date"><p>28</p>сентября</div>
+                                <div class="list-of-dates__weekday">СБ</div>
+                            </li>
+                            <li @click="loadInfo(5)" v-bind:class="{ selected: activeDate === 5 }" class="list-of-dates__item _weekend _sunday">
+                                <div class="list-of-dates__date"><p>29</p>сентября</div>
+                                <div class="list-of-dates__weekday">ВС</div>
+                            </li>
+                            <li @click="loadInfo(6)" v-bind:class="{ selected: activeDate === 6 }" class="list-of-dates__item _workday">
+                                <div class="list-of-dates__date"><p>30</p>сентября</div>
+                                <div class="list-of-dates__weekday">ПН</div>
+                            </li>
+                            <li @click="loadInfo(7)" v-bind:class="{ selected: activeDate === 7 }" class="list-of-dates__item _workday">
+                                <div class="list-of-dates__date"><p>31</p>сентября</div>
+                                <div class="list-of-dates__weekday">ВТ</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <button-counter :user="name"></button-counter>
+                </div>
+            </div>
+        </div>
+        <div class="page-content__sidebar">
+            <p>Реклама</p>
+            <img src="img/300x600.png" alt="">
+        </div>
+    </div>
+   <div class="info-bar">
+       <h2>Полные трансляции</h2>
+       <div class="info-bar__cases">
+            <div class="info-bar__case">
+                <p class="info-bar__view">34 567</p>
+                <p class="info-bar__play"></p>
+                <p class="info-bar__text">Показательные выступления. Финал Гран-при по фигурному катанию 2019/20</p>
+                <img src="img/info1.png" alt=""></div>
+            <div class="info-bar__case">
+                <p class="info-bar__view">34 567</p>
+                <p class="info-bar__play"></p>
+                <p class="info-bar__text">Показательные выступления. Финал Гран-при по фигурному катанию 2019/20</p>
+                <img src="img/info2.png" alt=""></div>
+            <div class="info-bar__case">
+                <p class="info-bar__view">34 567</p>
+                <p class="info-bar__play"></p>
+                <p class="info-bar__text _fifty">Россия — Канада. 3:4. Финал. Молодежный чемпионат мира по хоккею 2020</p>
+                <img src="img/info3.png" alt=""></div>
+            <div class="info-bar__case">
+                <p class="info-bar__view">34 567</p>
+                <p class="info-bar__play"></p>
+                <p class="info-bar__text">Россия — Швеция. 5:4. Полуфинал. Молодежный чемпионат мира по хоккею 2020</p>
+                <img src="img/info4.png" alt=""></div>
+            <div class="info-bar__case _prev">
+                <p class="info-bar__view ">34 567</p>
+                <p class="info-bar__play"></p>
+                <p class="info-bar__text text_min">Энтони Джошуа — Энди Руис. Бокс. Бой за титул чемпиона мира. Полная запись поединка</p>
+                <img src="img/info5.png" alt=""></div>
+            <div class="info-bar__case _prev">
+                <p class="info-bar__view">34 567</p>
+                <p class="info-bar__play"></p>
+                <p class="info-bar__text text_min">Энтони Джошуа — Энди Руис. Бокс. Бой за титул чемпиона мира. Полная запись поединка</p>
+                <img src="img/info6.png" alt=""></div>
+            <div class="info-bar__case"><p class="info-bar__commercial">Реклама</p><img src="img/info7.png" alt=""></div>
+       </div>
+       <div class="info-bar__more">Показать еще</div>
+       <a href="" class="info-bar__banner">
+           <img src="img/info8.png" alt="">
+       </a>
+       <div class="info-bar__cases">
+            <div class="info-bar__case"><p class="info-bar__commercial">Реклама</p><img src="img/info9.png" alt=""></div>
+            <div class="info-bar__case"><p class="info-bar__commercial">Реклама</p><img src="img/info10.png" alt=""></div>
+            <div class="info-bar__case"><p class="info-bar__commercial">Реклама</p><img src="img/info11.png" alt=""></div>
+        </div>
+       <h2>Сообщества Первого канала</h2>
+       <div class="info-bar__cases">
+            <div class="info-bar__case"><img src="img/info12.png" alt=""></div>
+            <div class="info-bar__case"><img src="img/info13.png" alt=""></div>
+            <div class="info-bar__case"><img src="img/info14.png" alt=""></div>
+            <div class="info-bar__case"><img src="img/info15.png" alt=""></div>
+            <div class="info-bar__case"><img src="img/info16.png" alt=""></div>
+            <div class="info-bar__case"><img src="img/info17.png" alt=""></div>
+        </div>
+   </div>
+        
+   
+   <script>
+       Vue.component('button-counter', {
+        props: ["user"],
+        data: function () {
+            return {
+                userName: this.user
+            }
+        },
+        //компонент для отображения расписания 
+        template: `
+        <div class="contest-tab">
+            <div class="selected-post-container" 
+                    v-for="post in user"
+                    v-bind:key="post.id"
+                    v-bind:title="post.title">
+                <div class="selected-post">
+                <h3>{{ post.title }}</h3>
+                <div class="selected-items" v-for="event in post.event">
+                    <ul>
+                        <li class="contest-item item_time">{{ event.time }}</li>
+                        <li class="contest-item item_title">{{ event.eventTitle }}</li>
+                        <li class="contest-item item_awards" v-if="event.awards"><img src="img/awards.png" alt=""></li>
+                        <li class="contest-item item_flag" v-if="event.flag"><img src="img/russia.png" alt=""></li>
+                        <li class="contest-item item_channel" v-if="event.channel"></li>
+                    </ul>
+                    <div class="selected-text">{{event.eventText}}</div>
+                    <ul class="contest-coment">
+                        <li class="coment-item"
+                     v-for="coment in event.commentators"><a v-bind:href="coment.link">{{coment.name}}</a></li>
+                    </ul>
+                    <div class="contest-view" v-if="event.play">
+                        <div class="view-btn">СМОТРЕТЬ</div>
+                        <div class="view-online">● Сейчас в эфире</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        `
+        })
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    //количество дат
+                    countDate: 0,
+                    //переменная для данных, которые приходят с сервера
+                    name: null,
+                    //id даты 
+                    dateId: 1,
+                    //Индекс активной даты
+                    activeDate: 1,
+                }
+            },
+            methods: {
+                //функция погрузки данных
+                //предполагается что будет запрос данных на сервер с передачей id
+                //после чего ответ записывем в переменную name и данные обновляются
+                loadInfo(id){
+                    this.activeDate = id;
+
+                    axios.get('ajax/get_action_items.php?action=' + id)
+					  .then(response => response.json())
+					  .then(data => {
+                        this.name = data;
+                      }); 
+                      
+                    //console.log(id);
+                },
+                // Идём вперед по датам и передаем в функцию loadInfo id
+                nextImage() {
+                    
+                    if(this.activeDate >= this.countDate) {
+                        return 0;
+                    }
+                    this.activeDate += 1;
+                    this.loadInfo(this.activeDate);
+                },
+                // Идём назад по датам и передаем в функцию loadInfo id
+                prevImage() {
+                    this.activeDate -= 1;
+                    if(this.activeDate <= 1) {
+                        this.activeDate = 1;
+                    }
+                    this.loadInfo(this.activeDate);            
+                },
+            },
+            mounted() {
+                //при загрузке страницы опреляем количество дат и отправляем запрос на сервер для первой даты
+                var div1 = document.getElementById("list");
+                this.countDate = div1.getAttribute("count");
+                
+                axios.get('ajax/get_action_items.php?action=1')
+					  .then(response => response.json())
+					  .then(data => {
+                        this.name = data;
+                      }); 
+
+                //пример ответа сервера
+                this.name = [{
+                    id: 1,
+                    title: "Расписание трансляций на сегодня,пятницу, 27 декабря 2019 года",
+                    event: [
+                        {
+                        time: "23:55",
+                        eventTitle: "Прыжки на лыжах с трамплина",
+                        awards: 1,
+                        flag: 1,
+                        channel: "tv",
+                        eventText: "Полуфинал за 3 место. Женщины. США — Канада. Квалификация 3000 м эстафета",
+                        commentators:[
+                                {
+                                    name: "Константин Выборнов,",
+                                    link: "link/vibornov"
+                                },
+                                {
+                                    name: "Кирилл Дементьев",
+                                    link: "link/dementev"
+                                }
+                            ],
+                        play: 1
+                        },
+                        {
+                        time: "23:55",
+                        eventTitle: "Прыжки на лыжах с трамплина",
+                        awards: 1,
+                        channel: "tv",
+                        eventText: "Полуфинал за 3 место. Женщины. США — Канада. Квалификация 3000 м эстафета",
+                        commentators:[
+                                {
+                                    name: "Константин Выборнов,",
+                                    link: "link/vibornov"
+                                },
+                                {
+                                    name: "Кирилл Дементьев",
+                                    link: "link/dementev"
+                                }
+                            ],
+                        play: 0
+                        },
+                        {
+                        time: "23:55",
+                        eventTitle: "Прыжки на лыжах с трамплина",
+                        awards: 0,
+                        flag: 1,
+                        channel: "tv",
+                        eventText: "Полуфинал за 3 место. Женщины. США — Канада. Квалификация 3000 м эстафета",
+                        commentators:[
+                                {
+                                    name: "Константин Выборнов,",
+                                    link: "link/vibornov"
+                                },
+                                {
+                                    name: "Кирилл Дементьев",
+                                    link: "link/dementev"
+                                }
+                            ],
+                        play: 0
+                        }
+                    ],
+                    }];
+            }
+                });
+   </script>
+   <style>
+       ._workday{
+            background-image: url(./img/date3.png);
+       }
+       ._workday.selected{
+           color: #0757A8 !important;
+            background-image: url(./img/date1.png);
+            background-size: 100% !important;
+        }
+        ._workday.selected .list-of-dates__date{
+            border-bottom: 2px solid #0757A8 !important;
+        }
+        ._weekend{
+            background-image: url(./img/date4.png);
+        }
+        ._weekend.selected{
+            color: #EA6159 !important;
+            background-image: url(./img/date2.png);
+            background-size: 100% !important;
+        }
+        ._weekend.selected .list-of-dates__date{
+            border-bottom: 2px solid #EA6159 !important;
+        }
+   </style>
+</body>
+
+</html>
+</div>
